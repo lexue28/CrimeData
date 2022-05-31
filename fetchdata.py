@@ -4,6 +4,19 @@ import numpy as np
 import pandas as pd
 
 ####################################
+#utility quality of life functions
+####################################
+def reverseDictionary(dct): #simple reverse dictionary function
+    dct = {v: k for k, v in dct.items()}
+    return dct
+
+def checkIfKey(key, dct):
+    if key in dct:
+        return True
+    else:
+        return False
+
+####################################
 #CSV FILE DIRECTORY NAMES
 ####################################
 global crimepopulationcsv
@@ -21,30 +34,39 @@ def getAreaDictionary(): #turns zipcodecsv into a dictionary with ZIP CODE int, 
     df = pd.read_csv(zipcodecsv, usecols=column_list)
     x = 0
     area_dict = dict(zip(df["zip"], df["primary_city"]))
+    area_dict = reverseDictionary(area_dict)
+    #print(area_dict)
+    area_dict =  {k.lower(): v for k, v in area_dict.items()} #NOTE: ALL CITIES IN THIS LIST ARE LOWERCASE STRINGS
+    area_dict = reverseDictionary(area_dict)
     return area_dict
 
 global areadictionary
 areadictionary = getAreaDictionary() #areadictioary from zipcodecsv. {zip int, city str}
+reverseareadictionary = reverseDictionary(areadictionary)
 
 ####################################
 #Get something from csv, given something
 ####################################
 def getCityGivenZip(zipcode, areadictionary): #returns city str given ZIP int
-    return areadictionary[zipcode]
+    check = checkIfKey(zipcode, areadictionary)
+    if check == True:
+        return areadictionary[zipcode]
+    else:
+        print("Error - zip not found. Did you spell it correctly?")
+        return False
 
 def getZipGivenCity(city, dct): #returns zip int given city str
+    city = city.lower()
+    check = checkIfKey(city, reverseDictionary(dct))
     dct = reverseDictionary(dct)
-    return dct[city]
-
-####################################
-#utility quality of life functions
-####################################
-def reverseDictionary(dct): #simple reverse dictionary function
-    dct = {v: k for k, v in dct.items()}
-    return dct
+    if check == True:
+        return dct[city]
+    else:
+        print("Error - city not found. Did you spell it correctly?")
+        return False
 
 ####################################
 #Test execute functions gonna delete later
 ####################################
 print (getCityGivenZip(99926, areadictionary))
-print (getZipGivenCity("Metlakatla", areadictionary))
+print (getZipGivenCity("MetLakatla", areadictionary))
