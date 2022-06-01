@@ -6,11 +6,11 @@ import pandas as pd
 ####################################
 #utility quality of life functions
 ####################################
-def reverseDictionary(dct): #simple reverse dictionary function
+def invertDictionary(dct): #simple invert dictionary function, returns inverted dictionary
     dct = {v: k for k, v in dct.items()}
     return dct
 
-def checkIfKey(key, dct):
+def checkIfKey(key, dct): #Checks if a key is in a dictionary, returns True/False
     if key in dct:
         return True
     else:
@@ -34,15 +34,15 @@ def getAreaDictionary(): #turns zipcodecsv into a dictionary with ZIP CODE int, 
     df = pd.read_csv(zipcodecsv, usecols=column_list)
     x = 0
     area_dict = dict(zip(df["zip"], df["primary_city"]))
-    area_dict = reverseDictionary(area_dict)
+    area_dict = invertDictionary(area_dict)
     #print(area_dict)
     area_dict =  {k.lower(): v for k, v in area_dict.items()} #NOTE: ALL CITIES IN THIS LIST ARE LOWERCASE STRINGS
-    area_dict = reverseDictionary(area_dict)
+    area_dict = invertDictionary(area_dict)
     return area_dict
 
 global areadictionary
 areadictionary = getAreaDictionary() #areadictioary from zipcodecsv. {zip int, city str}
-reverseareadictionary = reverseDictionary(areadictionary)
+inverseareadictionary = invertDictionary(areadictionary)
 
 ####################################
 #Get something from csv, given something
@@ -57,8 +57,8 @@ def getCityGivenZip(zipcode, areadictionary): #returns city str given ZIP int
 
 def getZipGivenCity(city, dct): #returns zip int given city str
     city = city.lower()
-    check = checkIfKey(city, reverseDictionary(dct))
-    dct = reverseDictionary(dct)
+    check = checkIfKey(city, invertDictionary(dct))
+    dct = invertDictionary(dct)
     if check == True:
         return dct[city]
     else:
