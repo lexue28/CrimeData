@@ -68,5 +68,5 @@ def getZipGivenCity(city, dct): #returns zip int given city str
 ####################################
 #Test execute functions gonna delete later
 ####################################
-print (getCityGivenZip(99926, areadictionary))
-print (getZipGivenCity("MetLakatla", areadictionary))
+#print (getCityGivenZip(99926, areadictionary)) #ignore these comments
+#print (getZipGivenCity("MetLakatla", areadictionary)) #ignore these comments
