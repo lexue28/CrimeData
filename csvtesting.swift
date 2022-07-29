@@ -46,16 +46,23 @@ func getZipGivenCity (cityInp: String) -> String {
   }
 }
 
-func findC (name: String) -> String { //idk how to do countryfind
+
+
+func findC (countyname, statename : String) -> String {
   do {
-    /*
-       let csvData = try String(contentsOfFile: "file")
+
+       let csvData = try String(contentsOfFile: "/docs/csv/uscities.csv")
        let csv = csvData.csvRows()
-       let str = ""
+       let arr = []
        for row in csv {
             let array = row.components(separatedBy: ",")
-            if (String(array[3]).lowercased() == cityInp.lowercased()){
-                return(String(array[0]))
+            if (String(array[2]).lowercased() == statename.lowercased()){
+                if (String(array[5]).lowercased() == county_name.lowercased()){
+                    return True
+                }
+                else{
+
+                }
             }
             else{
             }
